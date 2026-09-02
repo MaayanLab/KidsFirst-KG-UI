@@ -3,8 +3,8 @@
         {
             "node": "TranscriptionFactor",
             "example": [
-                "ZNF644",
-                "ZNF446"
+                "ZNF667",
+                "IRF1"
             ],
             "display": [
                 {
@@ -27,8 +27,8 @@
         {
             "node": "Kinase",
             "example": [
-                "STRADA",
-                "TESK2"
+                "PIK3R4",
+                "NIM1"
             ],
             "display": [
                 {
@@ -51,8 +51,8 @@
         {
             "node": "Gene",
             "example": [
-                "SPANXC",
-                "CPHXL"
+                "ENSG00000262560",
+                "PCDHB1"
             ],
             "display": [
                 {
@@ -73,8 +73,7 @@
                 {
                     "label": "uri",
                     "text": "${uri}",
-                    "href": "${uri}",
-                    "type": "link"
+                    "type": "text"
                 }
             ],
             "relation": [],
@@ -86,8 +85,8 @@
         {
             "node": "Protein",
             "example": [
-                "MED25",
-                "ANKRD44"
+                "NOC4L",
+                "PTPRC"
             ],
             "display": [
                 {
@@ -151,8 +150,8 @@
         {
             "node": "Patient",
             "example": [
-                "7316-6965_Cranio",
-                "7316-8858_Cranio"
+                "7316-1748_Cranio",
+                "7316-1116_Cranio"
             ],
             "display": [
                 {
@@ -212,82 +211,10 @@
     "edges": [
         {
             "match": [
-                "upregulated_in"
+                "glycosylated"
             ],
             "selected": true,
-            "color": "#0ac749",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "regulated_by"
-            ],
-            "selected": true,
-            "color": "#ffff06",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "downregulated_in"
-            ],
-            "selected": true,
-            "color": "#c70a2d",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "candidate_for"
-            ],
-            "selected": true,
-            "color": "#5c0ac7",
+            "color": "#bf75bc",
             "display": [
                 {
                     "label": "source",
@@ -305,30 +232,15 @@
                     "type": "text"
                 },
                 {
-                    "label": "connectivity map",
-                    "text": "${connectivity_map}",
-                    "type": "text"
-                },
-                {
-                    "label": "n overlap",
-                    "text": "${n_overlap}",
-                    "type": "text"
-                },
-                {
-                    "label": "adj p val",
-                    "text": "${adj_p_val}",
-                    "type": "text"
-                },
-                {
-                    "label": "perturbseqr id",
-                    "text": "${perturbseqr_id}",
+                    "label": "modified",
+                    "text": "${modified}",
                     "type": "text"
                 }
             ]
         },
         {
             "match": [
-                "enriched_for"
+                "enriched"
             ],
             "selected": true,
             "color": "#c7850a",
@@ -367,7 +279,31 @@
         },
         {
             "match": [
-                "phosphorylated_in"
+                "regulates"
+            ],
+            "selected": true,
+            "color": "#ffff06",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "phosphorylated"
             ],
             "selected": true,
             "color": "#c412bb",
@@ -396,10 +332,34 @@
         },
         {
             "match": [
-                "glycosylated_in"
+                "downregulated"
             ],
             "selected": true,
-            "color": "#bf75bc",
+            "color": "#c70a2d",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "ubiquitylated"
+            ],
+            "selected": true,
+            "color": "#593757",
             "display": [
                 {
                     "label": "source",
@@ -425,7 +385,79 @@
         },
         {
             "match": [
-                "acetylated_in"
+                "contains"
+            ],
+            "selected": true,
+            "color": "#0f0e0e",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "upregulated"
+            ],
+            "selected": true,
+            "color": "#0ac749",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "mutated"
+            ],
+            "selected": true,
+            "color": "#134bcf",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "acetylated"
             ],
             "selected": true,
             "color": "#c2a3c0",
@@ -454,58 +486,10 @@
         },
         {
             "match": [
-                "member_of"
+                "candidate"
             ],
             "selected": true,
-            "color": "#0f0e0e",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "mutated_in"
-            ],
-            "selected": true,
-            "color": "#134bcf",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "ubiquitylated_in"
-            ],
-            "selected": true,
-            "color": "#593757",
+            "color": "#5c0ac7",
             "display": [
                 {
                     "label": "source",
@@ -523,8 +507,23 @@
                     "type": "text"
                 },
                 {
-                    "label": "modified",
-                    "text": "${modified}",
+                    "label": "connectivity map",
+                    "text": "${connectivity_map}",
+                    "type": "text"
+                },
+                {
+                    "label": "n overlap",
+                    "text": "${n_overlap}",
+                    "type": "text"
+                },
+                {
+                    "label": "adj p val",
+                    "text": "${adj_p_val}",
+                    "type": "text"
+                },
+                {
+                    "label": "perturbseqr id",
+                    "text": "${perturbseqr_id}",
                     "type": "text"
                 }
             ]
