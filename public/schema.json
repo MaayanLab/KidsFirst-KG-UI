@@ -805,8 +805,8 @@
         }
     ],
     "header": {
-        "header": "Demo-KG",
-        "title": "Demo-KG",
+        "header": "Kids First Pan-Histology KG",
+        "title": "Kids First Pan-Histology KG",
         "background": {
             "backgroundColor": "#000",
             "contrastText": "#FFF"
@@ -814,7 +814,7 @@
         "icon": {
             "src": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
             "favicon": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
-            "faviconTitle": "Demo-KG",
+            "faviconTitle": "KF-KG",
             "alt": "Demo-KG",
             "key": "Demo-KG_logo",
             "width": 100,
@@ -830,13 +830,30 @@
                     "init_function": "initialize_kg",
                     "initial_query": {
                         "start": "Patient",
-                        "start_term": "7316-100",
+                        "start_term": "7316-9249",
                         "start_field": "id"
                     },
                     "subheader": {
                         "url_field": "filter",
                         "query_field": "relation"
                     }
+                }
+            },
+            {
+                "endpoint": "/patient_signal",
+                "label": "Patient Multi-omic Signal",
+                "type": "page",
+                "component": "PatientSignal",
+                "props": {
+                    "title": "Patient Multi-omic Signal",
+                    "description": "Genes and proteins with three or more omic alterations (PTM, expression, mutation, methylation) in a patient, and the enriched kinases, transcription factors or pathways linked to them.",
+                    "default_patient_id": "7316-9249",
+                    "default_enrichment_node_type": "Kinase",
+                    "examples": [
+                        "7316-4515",
+                        "7316-5495",
+                        "7316-1671"
+                    ]
                 }
             }
         ]
@@ -853,16 +870,9 @@
                     "props": {
                         "src": "https://minio.dev.maayanlab.cloud/enrichr-kg/enrichr-kg.png",
                         "alt": "enrichr-kg",
-                        "title": "Enrichr-KG",
+                        "title": "Kids First Pan-Histology KG",
                         "color": "inherit",
                         "size": "small"
-                    }
-                },
-                {
-                    "component": "github",
-                    "props": {
-                        "code": "https://github.com/MaayanLab/enrichr-kg",
-                        "issues": "https://github.com/MaayanLab/enrichr-kg-issues/issues/new"
                     }
                 }
             ],
@@ -895,7 +905,7 @@
                 }
             ]
         ],
-        "footer_text": "<span style='color:white'>Please acknowledge Enrichr-KG in your publications by citing the following reference:<br><a style='color: cyan' href='https://doi.org/10.1093/nar/gkad393'>Evangelista JE, Xie Z, Marino GB, Nguyen N, Clarke DJB, Ma'ayan A. Enrichr-KG: bridging enrichment analysis across multiple libraries. Nucleic Acids Res. 2023 May 11:gkad393. doi: 10.1093/nar/gkad393. PMID: 37166973.</a></span>"
+        "footer_text": "<span style='color:white; font-size:20px; font-weight:bold'>IN DEVELOPMENT...</a></span>"
     },
     "ui_theme": "enrichr_kg_theme"
 }

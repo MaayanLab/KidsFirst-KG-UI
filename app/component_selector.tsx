@@ -8,6 +8,7 @@ import Download from '@/components/Download'
 import APIDoc from '@/components/APIDoc'
 import SimpleTermAndGeneSearch from '@/components/SimpleTermAndGeneSearch'
 import Tutorial from '@/components/Tutorial.mdx'
+import PatientSignal from '@/components/PatientSignal'
 import { Suspense } from 'react'
 import { CircularProgress } from '@mui/material'
 const AsyncComponent = async ({component, searchParams, props, endpoint,}: 
@@ -25,6 +26,7 @@ const AsyncComponent = async ({component, searchParams, props, endpoint,}:
 	else if (component === "Download") return await Download({...props})
 	else if (component === "APIDoc") return await APIDoc({...props})
 	else if (component === "Tutorial") return <Tutorial/>
+	else if (component === "PatientSignal") return await PatientSignal({props, searchParams})
 	else return null
 }
 

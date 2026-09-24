@@ -49,7 +49,8 @@ export const resolve_results = async ({
 	kind_properties = {},
 	misc_props = {},
 	kind_mapper = null, 
-	arrow_shape = {}
+	arrow_shape = {},
+	distinct_edges = false
 }: {
 	query: string,
 	query_params?: {[key:string]: any},
@@ -63,7 +64,9 @@ export const resolve_results = async ({
 	kind_properties?: {[key: string]: any},
 	misc_props?: {[key: string]: any},
 	kind_mapper?: Function,
-	arrow_shape?: {[key:string]: ArrowShape}
+	arrow_shape?: {[key:string]: ArrowShape},
+	// keep every relationship instead of collapsing all edges between a node pair into one
+	distinct_edges?: boolean
 }):Promise<NetworkSchema> => {
 		try {
 			const session = neo4jDriver.session({
@@ -132,7 +135,7 @@ export const resolve_results = async ({
 				}
 				const relations = record.get('r')
 				for (const relation of relations) {
-					const relation_id = `${nodes[relation.start].data.id}_${nodes[relation.end].data.id}`
+					const relation_id = distinct_edges ? relation.identity.toString() : `${nodes[relation.start].data.id}_${nodes[relation.end].data.id}`
 					if (edges[relation_id] === undefined) {
 						const relation_type = relation.type
 						if (colors[relation_type] === undefined) {

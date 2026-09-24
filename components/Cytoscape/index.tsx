@@ -120,7 +120,8 @@ export default function Cytoscape ({
 	header_endpoint,
 	tooltip_templates_edges,
 	tooltip_templates_nodes,
-	filter_field
+	filter_field,
+	curve_style='straight'
 }: {
 	elements: null | NetworkSchema, 
 	search?:boolean,
@@ -130,6 +131,8 @@ export default function Cytoscape ({
 	tooltip_templates_edges: {[key: string]: Array<{[key: string]: string}>},
     tooltip_templates_nodes: {[key: string]: Array<{[key: string]: string}>},
 	filter_field: 'q' | 'filter',
+	// 'bezier' fans out parallel edges between the same node pair; 'straight' stacks them
+	curve_style?: 'straight' | 'bezier',
 }) {
 	const layouts = wide ? layout_wide: default_layouts
 	const cyref = useRef(null);
@@ -227,7 +230,7 @@ export default function Cytoscape ({
 						{
 							selector: 'edge',
 							style: {
-								'curve-style': 'straight',
+								'curve-style': curve_style,
 								// 'opacity': '0.5',
 								'line-color': 'data(lineColor)',
 								'width': '3',

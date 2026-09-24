@@ -50,3 +50,6 @@ legacy_components/
 
 docker-compose.*.yml
 settings.json
+
+# claude
+CLAUDE.md
