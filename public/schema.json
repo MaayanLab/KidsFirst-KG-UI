@@ -51,8 +51,8 @@
         {
             "node": "Gene",
             "example": [
-                "ENSG00000262560",
-                "PCDHB1"
+                "C2",
+                "CACNA1D"
             ],
             "display": [
                 {
@@ -73,7 +73,8 @@
                 {
                     "label": "uri",
                     "text": "${uri}",
-                    "type": "text"
+                    "href": "${uri}",
+                    "type": "link"
                 }
             ],
             "relation": [],
@@ -85,8 +86,8 @@
         {
             "node": "Protein",
             "example": [
-                "NOC4L",
-                "PTPRC"
+                "NCBP2AS2",
+                "GRK6"
             ],
             "display": [
                 {
@@ -104,6 +105,30 @@
                     "text": "${uri}",
                     "href": "${uri}",
                     "type": "link"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label"
+            ]
+        },
+        {
+            "node": "MolecularSubtype",
+            "example": [
+                "EPN, SP-MYCN",
+                "GNG, RTK"
+            ],
+            "display": [
+                {
+                    "label": "MolecularSubtype ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
                 }
             ],
             "relation": [],
@@ -148,10 +173,87 @@
             ]
         },
         {
+            "node": "Disease",
+            "example": [
+                "Ewing Sarcoma; Metastatic secondary tumors",
+                "Metastatic secondary tumors; Sarcoma"
+            ],
+            "display": [
+                {
+                    "label": "Disease ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                },
+                {
+                    "label": "mondo_id",
+                    "text": "${mondo_id}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label"
+            ]
+        },
+        {
+            "node": "CNSRegion",
+            "example": [
+                "Spine",
+                "Hemispheric"
+            ],
+            "display": [
+                {
+                    "label": "CNSRegion ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label"
+            ]
+        },
+        {
+            "node": "ClinicalStatus",
+            "example": [
+                "Deceased-due to other causes",
+                "Not Reported"
+            ],
+            "display": [
+                {
+                    "label": "ClinicalStatus ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label"
+            ]
+        },
+        {
             "node": "Patient",
             "example": [
-                "7316-1748_Cranio",
-                "7316-1116_Cranio"
+                "7316-1671_Cranio",
+                "7316-5468_Cranio"
             ],
             "display": [
                 {
@@ -214,7 +316,7 @@
                 "glycosylated"
             ],
             "selected": true,
-            "color": "#bf75bc",
+            "color": "#36ada4",
             "display": [
                 {
                     "label": "source",
@@ -243,7 +345,7 @@
                 "enriched"
             ],
             "selected": true,
-            "color": "#c7850a",
+            "color": "#8a94f4",
             "display": [
                 {
                     "label": "source",
@@ -279,10 +381,10 @@
         },
         {
             "match": [
-                "regulates"
+                "subtype"
             ],
             "selected": true,
-            "color": "#ffff06",
+            "color": "#f87644",
             "display": [
                 {
                     "label": "source",
@@ -303,10 +405,10 @@
         },
         {
             "match": [
-                "phosphorylated"
+                "regulates"
             ],
             "selected": true,
-            "color": "#c412bb",
+            "color": "#f564d4",
             "display": [
                 {
                     "label": "source",
@@ -321,11 +423,6 @@
                 {
                     "label": "target",
                     "text": "${target}",
-                    "type": "text"
-                },
-                {
-                    "label": "modified",
-                    "text": "${modified}",
                     "type": "text"
                 }
             ]
@@ -335,7 +432,7 @@
                 "downregulated"
             ],
             "selected": true,
-            "color": "#c70a2d",
+            "color": "#bb83f4",
             "display": [
                 {
                     "label": "source",
@@ -359,7 +456,7 @@
                 "ubiquitylated"
             ],
             "selected": true,
-            "color": "#593757",
+            "color": "#33b172",
             "display": [
                 {
                     "label": "source",
@@ -388,7 +485,31 @@
                 "contains"
             ],
             "selected": true,
-            "color": "#0f0e0e",
+            "color": "#37abb5",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "location"
+            ],
+            "selected": true,
+            "color": "#f77189",
             "display": [
                 {
                     "label": "source",
@@ -412,7 +533,7 @@
                 "upregulated"
             ],
             "selected": true,
-            "color": "#0ac749",
+            "color": "#d58c32",
             "display": [
                 {
                     "label": "source",
@@ -436,7 +557,7 @@
                 "mutated"
             ],
             "selected": true,
-            "color": "#134bcf",
+            "color": "#e866f4",
             "display": [
                 {
                     "label": "source",
@@ -457,10 +578,68 @@
         },
         {
             "match": [
+                "interacts"
+            ],
+            "selected": true,
+            "color": "#87a831",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                },
+                {
+                    "label": "stringDB score",
+                    "text": "${stringDB_score}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
                 "acetylated"
             ],
             "selected": true,
-            "color": "#c2a3c0",
+            "color": "#34ae91",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                },
+                {
+                    "label": "modified",
+                    "text": "${modified}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "phosphorylated"
+            ],
+            "selected": true,
+            "color": "#bb9832",
             "display": [
                 {
                     "label": "source",
@@ -489,7 +668,7 @@
                 "candidate"
             ],
             "selected": true,
-            "color": "#5c0ac7",
+            "color": "#f66bb0",
             "display": [
                 {
                     "label": "source",
@@ -524,6 +703,102 @@
                 {
                     "label": "perturbseqr id",
                     "text": "${perturbseqr_id}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "hypomethylated"
+            ],
+            "selected": true,
+            "color": "#38a8ca",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "hypermethylated"
+            ],
+            "selected": true,
+            "color": "#3ba3ec",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "status"
+            ],
+            "selected": true,
+            "color": "#50b131",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "diagnosis"
+            ],
+            "selected": true,
+            "color": "#a4a031",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
                     "type": "text"
                 }
             ]
