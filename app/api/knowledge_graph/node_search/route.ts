@@ -1,11 +1,12 @@
 import neo4j from "neo4j-driver"
 import { neo4jDriver } from "@/utils/neo4j"
-import {process_properties} from "@/utils/helper"
+import { process_properties } from "@/utils/helper"
 import { NextResponse } from "next/server"
 import type { NextRequest } from 'next/server'
 import { z } from "zod"
 import { zu } from 'zod_utilz'
 import { convert_query } from "@/utils/helper"
+import { fetch_kg_schema } from "@/utils/initialize"
 
 const query_schema = z.object({
     type: z.string(),
@@ -45,8 +46,14 @@ const query_schema = z.object({
  */
 export async function GET(req: NextRequest) {
     try {
-        const node_properties = await (await fetch(`${process.env.NODE_ENV==="development" ? process.env.NEXT_PUBLIC_HOST_DEV : process.env.NEXT_PUBLIC_HOST}${process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX: ''}/api/knowledge_graph/search_properties`)).json()
-        const {type, field="label", term, limit=100, filter={}} = query_schema.parse(convert_query(req))
+        // searchable fields per node type, read from the schema directly (same mapping as search_properties);
+        // fetching our own search_properties endpoint left a stale copy in Next's fetch cache
+        const schema = await fetch_kg_schema()
+        const node_properties: { [key: string]: Array<string> } = {}
+        for (const i of schema.nodes) {
+            node_properties[i.node] = i.search
+        }
+        const { type, field = "label", term, limit = 100, filter = {} } = query_schema.parse(convert_query(req))
         const session = neo4jDriver.session({
             defaultAccessMode: neo4j.session.READ
         })
@@ -56,14 +63,14 @@ export async function GET(req: NextRequest) {
         if (node_properties[type].indexOf(field) === -1) {
             return NextResponse.json({ error: `Invalid field: ${field}` }, { status: 400 })
         }
-        let query = `MATCH (a:\`${type}\`${filter ? " "+JSON.stringify(filter).replace(/"/g, "`"): ""})`
+        let query = `MATCH (a:\`${type}\`${filter ? " " + JSON.stringify(filter).replace(/"/g, "`") : ""})`
         // if (enzyme && enzyme.toLowerCase() === 'true') query = `MATCH (a:Gene ${filter})`
         if (term) {
             query = query + ` WHERE a.${field} =~ $term`
 
         }
         query = query + "  RETURN a LIMIT TOINTEGER($limit)"
-        const results = await session.readTransaction(txc => txc.run(query, {limit, term: `(?i).*${term}.*`}))
+        const results = await session.readTransaction(txc => txc.run(query, { limit, term: `(?i).*${term}.*` }))
         const records = {}
         for (const record of results.records) {
             const a = record.get('a')
@@ -74,5 +81,5 @@ export async function GET(req: NextRequest) {
     } catch (error) {
         return NextResponse.json(error, { status: 400 })
     }
-     
+
 }

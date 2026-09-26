@@ -60,7 +60,7 @@ export async function GET(req: NextRequest) {
 		enrichment_node_type: req.nextUrl.searchParams.get("enrichment_node_type") ?? undefined,
 		relation: parse_relation(req.nextUrl.searchParams.get("relation")),
 	})
-	if (!parsed.success) return NextResponse.json({ error: parsed.error.issues.map(i => `${i.path.join(".")}: ${i.message}`).join("; ") }, { status: 400 })
+	if (parsed.success === false) return NextResponse.json({ error: parsed.error.issues.map(i => `${i.path.join(".")}: ${i.message}`).join("; ") }, { status: 400 })
 	try {
 		const { patient_id, enrichment_node_type, relation } = parsed.data
 		const results = await resolve_patient_signal({ patient_id, enrichment_node_type })

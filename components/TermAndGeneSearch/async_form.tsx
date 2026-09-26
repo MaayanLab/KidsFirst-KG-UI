@@ -7,8 +7,8 @@ import { router_push } from "@/utils/client_side"
 import { process_filter } from "@/utils/helper"
 import { FilterSchema } from "@/utils/helper"
 
-const AsyncFormComponent = ({direction,
-    nodes, 
+const AsyncFormComponent = ({ direction,
+    nodes,
     initial_query,
     type,
     field,
@@ -16,24 +16,24 @@ const AsyncFormComponent = ({direction,
     filter,
     ...rest
 }: {
-		direction: string,
-        initial_query: {[key: string]: string},
-		nodes: {[key:string]: {[key:string]: any}},
-		filter: FilterSchema,
-        type: string,
-        field?: string, 
-        term?: string,
-        fullscreen?: 'true',
-        view?:string,
-	}) => {
-	const router = useRouter()
+    direction: string,
+    initial_query: { [key: string]: string },
+    nodes: { [key: string]: { [key: string]: any } },
+    filter: FilterSchema,
+    type: string,
+    field?: string,
+    term?: string,
+    fullscreen?: 'true',
+    view?: string,
+}) => {
+    const router = useRouter()
     const pathname = usePathname()
     const {
         start,
-        start_field='label',
+        start_field = 'label',
         start_term,
         end,
-        end_field='label',
+        end_field = 'label',
         end_term,
     } = filter
 
@@ -49,11 +49,11 @@ const AsyncFormComponent = ({direction,
     }
 
     const [inputTerm, setInputTerm] = useState<string>('')
-    const [controller, setController] = useState<{signal: AbortSignal, abort: Function} | null>(null)
+    const [controller, setController] = useState<{ signal: AbortSignal, abort: Function } | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
-    const [options, setOptions] = useState<{[key:string]: {[key:string]: string|number}} | null>(null)
+    const [options, setOptions] = useState<{ [key: string]: { [key: string]: string | number } } | null>(null)
     const [selected, setSelected] = React.useState(null)
-    
+
     const get_controller = () => {
         if (controller) controller.abort()
         const c = new AbortController()
@@ -63,7 +63,7 @@ const AsyncFormComponent = ({direction,
 
     const resolve_options = async () => {
         try {
-            if (type !== ''){
+            if (type !== '') {
                 const controller = get_controller()
                 const query = {
                     type,
@@ -71,18 +71,18 @@ const AsyncFormComponent = ({direction,
                     term: ""
                 }
                 if (inputTerm) query.term = inputTerm
-                const query_str = Object.entries(query).map(([k,v])=>(`${k}=${v}`)).join("&")
-                const res = await fetch(`${process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX: ''}/api/knowledge_graph/node_search${query_str ? "?" + query_str : ""}`, {
+                const query_str = Object.entries(query).map(([k, v]) => (`${k}=${v}`)).join("&")
+                const res = await fetch(`${process.env.NEXT_PUBLIC_PREFIX ? process.env.NEXT_PUBLIC_PREFIX : ''}/api/knowledge_graph/node_search${query_str ? "?" + query_str : ""}`, {
                     method: 'GET',
                     signal: controller.signal
                 })
-                let options:{[key:string]: {[key:string]: string|number}} = {}
+                let options: { [key: string]: { [key: string]: string | number } } = {}
                 if (res.ok) options = await (res).json()
                 if (inputTerm) setSelected(options[inputTerm])
                 else {
                     setSelected(null)
                 }
-                setOptions(options)  
+                setOptions(options)
             }
         } catch (error) {
             // console.error(error)
@@ -91,15 +91,15 @@ const AsyncFormComponent = ({direction,
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         if (term !== inputTerm) setInputTerm(term)
     }, [term])
 
-    useEffect(()=>{
+    useEffect(() => {
         if (inputTerm !== (selected || {})[field]) resolve_options()
     }, [inputTerm, type])
 
-    useEffect(()=>{
+    useEffect(() => {
         if (options && Object.keys(options).length) {
             const new_options = {}
             for (const v of Object.values(options)) {
@@ -116,11 +116,11 @@ const AsyncFormComponent = ({direction,
                 <Typography variant="body1" color="secondary"><b>{direction} with</b></Typography>
             </Grid>
             <Grid item xs={4} md={12}>
-                <Selector 
-                    entries={Object.keys(nodes).sort()} 
-                    value={type} 
-                    prefix={direction} 
-                    onChange={(type:string)=>{
+                <Selector
+                    entries={Object.keys(nodes).sort()}
+                    value={type}
+                    prefix={direction}
+                    onChange={(type: string) => {
                         if (direction === 'Start') {
                             setInputTerm('')
                             router_push(router, pathname,
@@ -147,46 +147,46 @@ const AsyncFormComponent = ({direction,
                                 }
                             )
                         }
-                }}/>
+                    }} />
             </Grid>
             <Grid item xs={4} md={12}>
-                <Selector entries={(nodes[type] || {}).search || []} value={field} prefix={`${type}field`} onChange={(field)=>{
+                <Selector entries={(nodes[type] || {}).search || []} value={field} prefix={`${type}field`} onChange={(field) => {
                     const new_term = (selected || {})[field]
                     if (direction === 'Start') {
                         const f = {
                             start: type,
                             start_field: field,
-							start_term: '',
+                            start_term: '',
                             ...end_filter
                         }
                         if (new_term) f.start_term = new_term
-						router_push(router, pathname,
-							{
+                        router_push(router, pathname,
+                            {
                                 ...rest,
                                 filter: JSON.stringify(f)
                             }
-						)
+                        )
                     } else {
                         const f = {
                             ...start_filter,
                             end: type,
                             end_field: field,
-							end_term: ''
+                            end_term: ''
                         }
                         if (new_term) f.end_term = new_term
                         router_push(router, pathname,
-							{
+                            {
                                 ...rest,
                                 filter: JSON.stringify(f)
                             }
-						)
+                        )
                     }
-                    
-                }}/>
+
+                }} />
             </Grid>
-            <Grid item xs={Object.keys(nodes).length > 1 ? 4: 12} md={12}>
+            <Grid item xs={Object.keys(nodes).length > 1 ? 4 : 12} md={12}>
                 <Autocomplete
-                    id="my-input" aria-describedby="gene" 
+                    id="my-input" aria-describedby="gene"
                     options={Object.keys(options || {})}
                     value={term}
                     loading={loading}
@@ -194,8 +194,8 @@ const AsyncFormComponent = ({direction,
                         if (term === null) term = ''
                         setInputTerm(term)
                         if (direction === 'Start') {
-							router_push(router, pathname,
-								{
+                            router_push(router, pathname,
+                                {
                                     ...rest,
                                     filter: JSON.stringify({
                                         start: type,
@@ -204,10 +204,10 @@ const AsyncFormComponent = ({direction,
                                         ...end_filter
                                     })
                                 }
-							)
+                            )
                         } else {
-							router_push(router, pathname,
-								{
+                            router_push(router, pathname,
+                                {
                                     ...rest,
                                     filter: JSON.stringify({
                                         ...start_filter,
@@ -216,47 +216,47 @@ const AsyncFormComponent = ({direction,
                                         end_term: term,
                                     })
                                 }
-							)
+                            )
                         }
                     }}
-                    sx={{ width: '100%'}}
+                    sx={{ width: '100%' }}
                     renderInput={(params) => (
-                    <TextField {...params} 
-                        value={inputTerm}
-                        sx={{
-                            width: '100%',
-                            height: 50,
-                            borderRadius: 5,
-                            padding: 0
-                        }}
-                        onChange={(e)=> setInputTerm(e.target.value)}
-                        InputProps={{
-                            ...params.InputProps,
-                            endAdornment: null,
-                            style: {
-                                fontSize: 16,
-                                height: 45,
-                                width: "100%",
-                                paddingLeft: 5,
-                                display: "flex",
-                                flexDirection: "column",
-                                justifyContent: "center",
-                                alignContent: "flex-start",
-                                backgroundColor: "#FFF"
-                            }
-                        }}
-                        inputProps={{
-                            ...params.inputProps,
-                            style: {width: "100%"}
-                          }}
-                    />
+                        <TextField {...params}
+                            value={inputTerm}
+                            sx={{
+                                width: '100%',
+                                height: 50,
+                                borderRadius: 5,
+                                padding: 0
+                            }}
+                            onChange={(e) => setInputTerm(e.target.value)}
+                            InputProps={{
+                                ...params.InputProps,
+                                endAdornment: null,
+                                style: {
+                                    fontSize: 16,
+                                    height: 45,
+                                    width: "100%",
+                                    paddingLeft: 5,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignContent: "flex-start",
+                                    backgroundColor: "#FFF"
+                                }
+                            }}
+                            inputProps={{
+                                ...params.inputProps,
+                                style: { width: "100%" }
+                            }}
+                        />
                     )}
                 />
             </Grid>
             <Grid item xs={12}>
-                <Stack sx={{flexDirection: {xs: 'row', md: 'column', alignContent: "center"}}}>
+                <Stack sx={{ flexDirection: { xs: 'row', md: 'column', alignContent: "center" } }}>
                     <Typography variant="caption">Example:</Typography>
-                    {((nodes[type] || {}).example || []).map((e,i)=>{
+                    {((nodes[type] || {}).example || []).map((e, i) => {
                         let query = {}
                         if (direction === 'Start') {
                             query = {
@@ -281,42 +281,42 @@ const AsyncFormComponent = ({direction,
                         return (
                             <Link
                                 key={e}
-                                sx={{textDecoration: "none"}}
+                                sx={{ textDecoration: "none" }}
                                 color="secondary"
                                 href={pathname + `?filter=${JSON.stringify(query)}`}
                             >
-                            <Typography sx={{marginLeft: {xs: 2, md: 'auto'}}} variant="caption" color="secondary">{e}</Typography>
-                        </Link> 
-                    )
+                                <Typography sx={{ marginLeft: { xs: 2, md: 'auto' } }} variant="caption" color="secondary">{e}</Typography>
+                            </Link>
+                        )
                     })}
                 </Stack>
             </Grid>
-            
-            {direction === "Start" && 
+
+            {direction === "Start" &&
                 <Grid item xs={12}>
                     <Stack direction={'row'} alignItems={"center"} justifyContent={'space-between'}>
                         <Typography variant="caption">End Node</Typography>
-                        <Switch 
-                            color="secondary" 
+                        <Switch
+                            color="secondary"
                             checked={filter.end !== undefined}
-                            onChange={()=>{
+                            onChange={() => {
                                 if (filter.end) {
-                                    const {relation, end, end_term, end_field, augment, augment_limit, additional_link_tags, ...filt} = filter
-                            
+                                    const { relation, end, end_term, end_field, augment, augment_limit, additional_link_tags, ...filt } = filter
+
                                     const query = process_filter({
                                         ...rest,
                                         filter: filt
                                     })
                                     router_push(router, pathname, query)
                                 } else {
-                                    const {relation, augment, augment_limit, additional_link_tags, ...f}: {
+                                    const { relation, augment, augment_limit, additional_link_tags, ...f }: {
                                         start?: string,
                                         start_field?: string,
                                         start_term?: string,
                                         end?: string,
                                         end_field?: string,
                                         end_term?: string,
-                                        relation?: string| Array<string | {name?: string, limit?: string}>,
+                                        relation?: string | Array<string | { name?: string, limit?: string }>,
                                         limit?: number,
                                         page?: number,
                                         filter?: FilterSchema,
@@ -326,7 +326,7 @@ const AsyncFormComponent = ({direction,
                                         ...rest,
                                         filter: {
                                             ...f,
-                                            end: nodes['Gene'] !== undefined ? 'Gene': Object.keys(nodes)[0],
+                                            end: nodes['Gene'] !== undefined ? 'Gene' : Object.keys(nodes)[0],
                                             end_field: 'label',
                                         }
                                     })
