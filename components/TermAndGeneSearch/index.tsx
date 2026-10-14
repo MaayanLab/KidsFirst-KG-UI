@@ -2,7 +2,7 @@ import dynamic from "next/dynamic"
 import { FilterSchema } from "@/utils/helper"
 import { process_relation } from "@/utils/helper"
 // import ClientTermAndGeneSearch from './client_side'
-import { Grid, Typography, CircularProgress, Card, CardContent, Stack } from "@mui/material"
+import { Grid, Typography, CircularProgress, Card, CardContent, Stack, Box, Divider } from "@mui/material"
 import { parseAsJson } from "next-usequerystate"
 import AsyncFormComponent from "./async_form"
 import Form from "./form"
@@ -154,17 +154,17 @@ const TermAndGeneSearch = async ({searchParams, props}: {
         //         {...props}
         //     />
         return (
-            <Grid container spacing={2}>
-                {props.title && <Grid item xs={12}>
-                    <Typography variant={"h2"}>{props.title}</Typography>
-                </Grid>}
-                {props.description && <Grid item xs={12}>
-                    <Typography variant={"subtitle1"}>{props.description}</Typography>
+            <Grid container spacing={3}>
+                {(props.title || props.description) && <Grid item xs={12}>
+                    <Stack spacing={0.75}>
+                        {props.title && <Typography variant={"h2"}>{props.title}</Typography>}
+                        {props.description && <Typography variant={"subtitle1"} sx={{color: "text.secondary", maxWidth: 820}}>{props.description}</Typography>}
+                    </Stack>
                 </Grid>}
                 <Grid item xs={12} md={4} lg={3}>
-                    <Card elevation={0} sx={{borderRadius: "8px", backgroundColor: "tertiary.light"}}>
+                    <Card>
                         <CardContent>
-                            <Stack>
+                            <Stack spacing={2.5} divider={<Divider flexItem/>}>
                                 <AsyncFormComponent 
                                     nodes={nodes}
                                     initial_query={props.initial_query}
@@ -193,41 +193,41 @@ const TermAndGeneSearch = async ({searchParams, props}: {
                     </Card>
                 </Grid>
                 <Grid item xs={12} md={8} lg={9}>
-                    <Stack>
-                        <Form searchParams={searchParams}
-                            edges={edges}
-                            genes={genes}
-                            coexpression_prediction={props.coexpression_prediction}
-                            additional_link_button={props.additional_link_button}
-                            additional_link_relation_tags={props.additional_link_relation_tags}
-                            neighborCount={props.neighborCount}
-                            hiddenLinksRelations={hiddenLinksRelations}
-                            elements={elements}
-                            initial_query={props.initial_query}
-                        />
-                        <Card sx={{borderRadius: "24px"}}>
-                            <CardContent>
-                            {(searchParams.view === "table") ? 
-                                <div style={{minHeight: 700}}><NetworkTable data={elements} schema={schema}/></div>:
-                                <div style={{minHeight: 700, position: "relative"}}>
-                                    {filter.end_term ? 
-                                    <Typography variant="h5" sx={{textAlign: "center"}}><b>Connections Between {filter.start_term} and {filter.end_term}</b></Typography>:
-                                    <Typography variant="h5" sx={{textAlign: "center"}}><b>Subnetwork of TFs Connected to {filter.start_term}</b></Typography>
-                                    }
-                                    <Cytoscape 
-                                        elements={elements}
-                                        wide={true}
-                                        stepsize={100}
-                                        tooltip_templates_edges={tooltip_templates_edges}
-                                        tooltip_templates_nodes={tooltip_templates_nodes}
-                                        filter_field="filter"
-                                        header_endpoint={(schema.header.tabs.filter(i=>i.component === 'KnowledgeGraph')[0] || {}).endpoint || '/'}
-                                    />
-                                </div>
-                            }
-                            </CardContent>
-                        </Card>
-                    </Stack>
+                    <Card>
+                        <Box sx={{paddingX: 2.5, paddingY: 2, borderBottom: 1, borderColor: "divider", backgroundColor: "paperGray.main"}}>
+                            <Form searchParams={searchParams}
+                                edges={edges}
+                                genes={genes}
+                                coexpression_prediction={props.coexpression_prediction}
+                                additional_link_button={props.additional_link_button}
+                                additional_link_relation_tags={props.additional_link_relation_tags}
+                                neighborCount={props.neighborCount}
+                                hiddenLinksRelations={hiddenLinksRelations}
+                                elements={elements}
+                                initial_query={props.initial_query}
+                            />
+                        </Box>
+                        <CardContent>
+                        {(searchParams.view === "table") ? 
+                            <div style={{minHeight: 700}}><NetworkTable data={elements} schema={schema}/></div>:
+                            <div style={{minHeight: 700, position: "relative"}}>
+                                {filter.end_term ? 
+                                <Typography variant="h5" sx={{textAlign: "center"}}>Connections Between {filter.start_term} and {filter.end_term}</Typography>:
+                                <Typography variant="h5" sx={{textAlign: "center"}}>Subnetwork of TFs Connected to {filter.start_term}</Typography>
+                                }
+                                <Cytoscape 
+                                    elements={elements}
+                                    wide={true}
+                                    stepsize={100}
+                                    tooltip_templates_edges={tooltip_templates_edges}
+                                    tooltip_templates_nodes={tooltip_templates_nodes}
+                                    filter_field="filter"
+                                    header_endpoint={(schema.header.tabs.filter(i=>i.component === 'KnowledgeGraph')[0] || {}).endpoint || '/'}
+                                />
+                            </div>
+                        }
+                        </CardContent>
+                    </Card>
                 </Grid>
             </Grid>
         )

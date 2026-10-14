@@ -18,10 +18,21 @@ export  function TextNav({title, path, props}:  {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [clicked, setClicked] = useState<null | string>(null);
   	const open = Boolean(anchorEl);
-	let sx
-	if (pathname === path) {
-		// sx = {textDecoration: "underline", textDecorationThickness: 0}
-		sx = {textDecoration: "none"}; 
+	const active = pathname === path
+	const sx = {
+		display: "block",
+		paddingX: 1.5,
+		paddingY: 0.75,
+		borderRadius: 999,
+		whiteSpace: "nowrap",
+		transition: "background-color 120ms ease, color 120ms ease",
+		backgroundColor: active ? "action.selected": "transparent",
+		color: active ? "secondary.main": undefined,
+		fontWeight: active ? 600: undefined,
+		"&:hover": {
+			backgroundColor: active ? "action.selected": "action.hover",
+			color: "secondary.main",
+		},
 	}
 	if (props !== undefined && props.submenu !== undefined) {
 		const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,9 +63,6 @@ export  function TextNav({title, path, props}:  {
 					'aria-labelledby': 'basic-button',
 					}}
 					sx={{
-						"& .MuiMenu-paper": {
-							backgroundColor: "primary.main"
-						},
 						display: {xs: "none", sm: "none", md: "block"}
 					}}
 				>
@@ -75,7 +83,7 @@ export  function TextNav({title, path, props}:  {
 						onClick={()=>clicked===title?setClicked(null): setClicked(title)}
 						sx={{padding: 0, marginLeft: 0}}
 					>
-						<Typography variant="nav" sx={sx}>{title}</Typography>
+						<Typography variant="nav_small" sx={{color: active ? "secondary.main": undefined}}>{title}</Typography>
 					</ButtonBase>
 				</ListItem>
 				<Collapse in={clicked===title} timeout="auto" unmountOnExit  sx={{display: {xs: "block", sm: "block", md: "none", lg: "none", xl: "none"}}}>
@@ -95,11 +103,11 @@ export  function TextNav({title, path, props}:  {
 		return(
 			<>
 				<Link href={path}>
-					<Typography sx={{display: {xs: "none", sm: "none", md: "block"}, ...sx}} variant="nav">{title}</Typography>
+					<Typography sx={{...sx, display: {xs: "none", sm: "none", md: "block"}}} variant="nav" aria-current={active ? "page": undefined}>{title}</Typography>
 				</Link>
 				<ListItem sx={{display: {xs: "block", sm: "block", md: "none", lg: "none", xl: "none"}}}>
 					<Link href={path}>
-						<Typography variant="nav" sx={{color: {xs: "#000", sm: "#000", md: "#FFF", lg: "#FFF", xl: "#FFF"}}}>{title}</Typography>
+						<Typography variant="nav_small" sx={{color: active ? "secondary.main": undefined}}>{title}</Typography>
 					</Link>
 				</ListItem>
 			</>

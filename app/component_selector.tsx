@@ -11,28 +11,30 @@ import Tutorial from '@/components/Tutorial.mdx'
 import PatientSignal from '@/components/PatientSignal'
 import { Suspense } from 'react'
 import { CircularProgress } from '@mui/material'
-const AsyncComponent = async ({component, searchParams, props, endpoint,}: 
-	{component: string, endpoint: string, searchParams: {[key:string]: any}, 
-	props: {[key:string]: any}}) => {
-	if (component === "KnowledgeGraph") return await TermAndGeneSearch({props, searchParams})
-	else if (component === "SimpleKnowledgeGraph") return await SimpleTermAndGeneSearch({props, searchParams})
-	else if (component === "DistilleryLanding") return await DistilleryLanding({...props})
-	else if (component === "CardsLanding") return await DistilleryLanding({...props})
-	else if (component === "SanitizedHTML") return await SanitizedHTML({...props})
-	else if (component === "Markdown") return await Markdown({...props})
-	else if (component === "UseCaseLanding") return await DistilleryLanding({...props})
-	else if (component === "UseCase") return await DistilleryUseCase({...props, searchParams})
-	else if (component === "Enrichment") return await Enrichment({endpoint, searchParams, ...props})
-	else if (component === "Download") return await Download({...props})
-	else if (component === "APIDoc") return await APIDoc({...props})
-	else if (component === "Tutorial") return <Tutorial/>
-	else if (component === "PatientSignal") return await PatientSignal({props, searchParams})
+const AsyncComponent = async ({ component, searchParams, props, endpoint, }:
+	{
+		component: string, endpoint: string, searchParams: { [key: string]: any },
+		props: { [key: string]: any }
+	}) => {
+	if (component === "KnowledgeGraph") return await TermAndGeneSearch({ props, searchParams })
+	else if (component === "SimpleKnowledgeGraph") return await SimpleTermAndGeneSearch({ props, searchParams })
+	else if (component === "DistilleryLanding") return await DistilleryLanding({ ...props })
+	else if (component === "CardsLanding") return await DistilleryLanding({ ...props })
+	else if (component === "SanitizedHTML") return await SanitizedHTML({ ...props })
+	else if (component === "Markdown") return await Markdown({ ...props })
+	else if (component === "UseCaseLanding") return await DistilleryLanding({ ...props })
+	else if (component === "UseCase") return await DistilleryUseCase({ ...props, searchParams })
+	else if (component === "Enrichment") return await Enrichment({ endpoint, searchParams, ...props })
+	else if (component === "Download") return await Download({ ...props })
+	else if (component === "APIDoc") return await APIDoc({ ...props })
+	else if (component === "Tutorial") return <Tutorial />
+	else if (component === "PatientSignal") return await PatientSignal({ props, searchParams })
 	else return null
 }
 
-export const Component = (props: {component: string, endpoint: string, searchParams: {[key:string]: any}, props: {[key:string]: any}}) => {
-	return <Suspense fallback={<CircularProgress/>}>
+export const Component = (props: { component: string, endpoint: string, searchParams: { [key: string]: any }, props: { [key: string]: any } }) => {
+	return <Suspense fallback={<CircularProgress />}>
 		{/* @ts-expect-error Server Component */}
-		<AsyncComponent {...props}/>
+		<AsyncComponent {...props} />
 	</Suspense>
 }

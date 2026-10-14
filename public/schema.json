@@ -1,38 +1,14 @@
 {
     "nodes": [
         {
-            "node": "TranscriptionFactor",
+            "node": "Patient",
             "example": [
-                "ZNF667",
-                "IRF1"
+                "7316-9249",
+                "7316-100"
             ],
             "display": [
                 {
-                    "label": "TranscriptionFactor ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
-                }
-            ],
-            "relation": [],
-            "search": [
-                "id",
-                "label"
-            ]
-        },
-        {
-            "node": "Kinase",
-            "example": [
-                "PIK3R4",
-                "NIM1"
-            ],
-            "display": [
-                {
-                    "label": "Kinase ID",
+                    "label": "Patient ID",
                     "text": "${id}",
                     "type": "text"
                 },
@@ -66,8 +42,158 @@
                     "type": "text"
                 },
                 {
-                    "label": "ensembl_id",
-                    "text": "${ensembl_id}",
+                    "label": "uri",
+                    "text": "${uri}",
+                    "href": "${uri}",
+                    "type": "link"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label"
+            ]
+        },
+        {
+            "node": "phosphorylated_site",
+            "example": [
+                "A2M_708_708_Y708",
+                "AAK1_34_34_Y34"
+            ],
+            "display": [
+                {
+                    "label": "phosphorylated_site ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                },
+                {
+                    "label": "protein",
+                    "text": "${protein}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label",
+                "protein"
+            ]
+        },
+        {
+            "node": "acetylated_site",
+            "example": [
+                "A2M_1165_1176_K1168",
+                "A2M_124_135_K135"
+            ],
+            "display": [
+                {
+                    "label": "acetylated_site ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                },
+                {
+                    "label": "protein",
+                    "text": "${protein}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label",
+                "protein"
+            ]
+        },
+        {
+            "node": "glycosylated_site",
+            "example": [
+                "A1BG-N179-N7H4F1S0G0",
+                "A1BG-N179-N3H4F0S1G0"
+            ],
+            "display": [
+                {
+                    "label": "glycosylated_site ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                },
+                {
+                    "label": "protein",
+                    "text": "${protein}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label",
+                "protein"
+            ]
+        },
+        {
+            "node": "ubiquitinated_site",
+            "example": [
+                "AAAS_53_60_K56",
+                "ABCA1_2020_2030_K2023"
+            ],
+            "display": [
+                {
+                    "label": "ubiquitinated_site ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                },
+                {
+                    "label": "protein",
+                    "text": "${protein}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label",
+                "protein"
+            ]
+        },
+        {
+            "node": "Pathway",
+            "example": [
+                "DNA Repair (GO:0006281)",
+                "Spliceosomal snRNP Assembly (GO:0000387)"
+            ],
+            "display": [
+                {
+                    "label": "Pathway ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                },
+                {
+                    "label": "ontology_label",
+                    "text": "${ontology_label}",
                     "type": "text"
                 },
                 {
@@ -84,14 +210,14 @@
             ]
         },
         {
-            "node": "Protein",
+            "node": "Drug",
             "example": [
-                "NCBP2AS2",
-                "GRK6"
+                "crizotinib",
+                "trametinib"
             ],
             "display": [
                 {
-                    "label": "Protein ID",
+                    "label": "Drug ID",
                     "text": "${id}",
                     "type": "text"
                 },
@@ -101,10 +227,39 @@
                     "type": "text"
                 },
                 {
-                    "label": "uri",
-                    "text": "${uri}",
-                    "href": "${uri}",
-                    "type": "link"
+                    "label": "moa",
+                    "text": "${moa}",
+                    "type": "text"
+                }
+            ],
+            "relation": [],
+            "search": [
+                "id",
+                "label",
+                "moa"
+            ]
+        },
+        {
+            "node": "Disease",
+            "example": [
+                "Ewing Sarcoma; Metastatic secondary tumors",
+                "Metastatic secondary tumors; Sarcoma"
+            ],
+            "display": [
+                {
+                    "label": "Disease ID",
+                    "text": "${id}",
+                    "type": "text"
+                },
+                {
+                    "label": "label",
+                    "text": "${label}",
+                    "type": "text"
+                },
+                {
+                    "label": "mondo_id",
+                    "text": "${mondo_id}",
+                    "type": "text"
                 }
             ],
             "relation": [],
@@ -138,70 +293,6 @@
             ]
         },
         {
-            "node": "Pathway",
-            "example": [
-                "Tyrosine Metabolic Process (GO:0006570)",
-                "Sensory Perception of Chemical Stimulus (GO:0007606)"
-            ],
-            "display": [
-                {
-                    "label": "Pathway ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
-                },
-                {
-                    "label": "ontology_label",
-                    "text": "${ontology_label}",
-                    "type": "text"
-                },
-                {
-                    "label": "uri",
-                    "text": "${uri}",
-                    "href": "${uri}",
-                    "type": "link"
-                }
-            ],
-            "relation": [],
-            "search": [
-                "id",
-                "label"
-            ]
-        },
-        {
-            "node": "Disease",
-            "example": [
-                "Ewing Sarcoma; Metastatic secondary tumors",
-                "Metastatic secondary tumors; Sarcoma"
-            ],
-            "display": [
-                {
-                    "label": "Disease ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
-                },
-                {
-                    "label": "mondo_id",
-                    "text": "${mondo_id}",
-                    "type": "text"
-                }
-            ],
-            "relation": [],
-            "search": [
-                "id",
-                "label"
-            ]
-        },
-        {
             "node": "CNSRegion",
             "example": [
                 "Spine",
@@ -224,96 +315,12 @@
                 "id",
                 "label"
             ]
-        },
-        {
-            "node": "ClinicalStatus",
-            "example": [
-                "Deceased-due to other causes",
-                "Not Reported"
-            ],
-            "display": [
-                {
-                    "label": "ClinicalStatus ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
-                }
-            ],
-            "relation": [],
-            "search": [
-                "id",
-                "label"
-            ]
-        },
-        {
-            "node": "Patient",
-            "example": [
-                "7316-1671_Cranio",
-                "7316-5468_Cranio"
-            ],
-            "display": [
-                {
-                    "label": "Patient ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
-                    "label": "histology",
-                    "text": "${histology}",
-                    "type": "text"
-                },
-                {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
-                }
-            ],
-            "relation": [],
-            "search": [
-                "id",
-                "label",
-                "histology"
-            ]
-        },
-        {
-            "node": "Drug",
-            "example": [
-                "Streptozocin",
-                "Quercetin"
-            ],
-            "display": [
-                {
-                    "label": "Drug ID",
-                    "text": "${id}",
-                    "type": "text"
-                },
-                {
-                    "label": "label",
-                    "text": "${label}",
-                    "type": "text"
-                },
-                {
-                    "label": "moa",
-                    "text": "${moa}",
-                    "type": "text"
-                }
-            ],
-            "relation": [],
-            "search": [
-                "id",
-                "label",
-                "moa"
-            ]
         }
     ],
     "edges": [
         {
             "match": [
-                "glycosylated"
+                "modified"
             ],
             "selected": true,
             "color": "#36ada4",
@@ -332,59 +339,15 @@
                     "label": "target",
                     "text": "${target}",
                     "type": "text"
-                },
-                {
-                    "label": "modified",
-                    "text": "${modified}",
-                    "type": "text"
                 }
             ]
         },
         {
             "match": [
-                "enriched"
+                "site"
             ],
             "selected": true,
-            "color": "#8a94f4",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                },
-                {
-                    "label": "fisher fdr",
-                    "text": "${fisher_fdr}",
-                    "type": "text"
-                },
-                {
-                    "label": "n overlap",
-                    "text": "${n_overlap}",
-                    "type": "text"
-                },
-                {
-                    "label": "gene overlap",
-                    "text": "${gene_overlap}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "subtype"
-            ],
-            "selected": true,
-            "color": "#f87644",
+            "color": "#9aa5b1",
             "display": [
                 {
                     "label": "source",
@@ -405,10 +368,10 @@
         },
         {
             "match": [
-                "regulates"
+                "upregulated_gene"
             ],
             "selected": true,
-            "color": "#f564d4",
+            "color": "#d58c32",
             "display": [
                 {
                     "label": "source",
@@ -429,7 +392,7 @@
         },
         {
             "match": [
-                "downregulated"
+                "downregulated_gene"
             ],
             "selected": true,
             "color": "#bb83f4",
@@ -453,39 +416,10 @@
         },
         {
             "match": [
-                "ubiquitylated"
+                "upregulated_protein"
             ],
             "selected": true,
-            "color": "#33b172",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                },
-                {
-                    "label": "modified",
-                    "text": "${modified}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "contains"
-            ],
-            "selected": true,
-            "color": "#37abb5",
+            "color": "#e0b04a",
             "display": [
                 {
                     "label": "source",
@@ -506,34 +440,10 @@
         },
         {
             "match": [
-                "location"
+                "downregulated_protein"
             ],
             "selected": true,
-            "color": "#f77189",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "upregulated"
-            ],
-            "selected": true,
-            "color": "#d58c32",
+            "color": "#8f6fe0",
             "display": [
                 {
                     "label": "source",
@@ -558,6 +468,78 @@
             ],
             "selected": true,
             "color": "#e866f4",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "hypermethylated"
+            ],
+            "selected": true,
+            "color": "#3ba3ec",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "hypomethylated"
+            ],
+            "selected": true,
+            "color": "#38a8ca",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "regulates"
+            ],
+            "selected": true,
+            "color": "#f564d4",
             "display": [
                 {
                     "label": "source",
@@ -607,10 +589,10 @@
         },
         {
             "match": [
-                "acetylated"
+                "contains"
             ],
             "selected": true,
-            "color": "#34ae91",
+            "color": "#37abb5",
             "display": [
                 {
                     "label": "source",
@@ -625,21 +607,16 @@
                 {
                     "label": "target",
                     "text": "${target}",
-                    "type": "text"
-                },
-                {
-                    "label": "modified",
-                    "text": "${modified}",
                     "type": "text"
                 }
             ]
         },
         {
             "match": [
-                "phosphorylated"
+                "enriched"
             ],
             "selected": true,
-            "color": "#bb9832",
+            "color": "#8a94f4",
             "display": [
                 {
                     "label": "source",
@@ -657,8 +634,28 @@
                     "type": "text"
                 },
                 {
-                    "label": "modified",
-                    "text": "${modified}",
+                    "label": "fisher fdr",
+                    "text": "${fisher_fdr}",
+                    "type": "text"
+                },
+                {
+                    "label": "n overlap",
+                    "text": "${n_overlap}",
+                    "type": "text"
+                },
+                {
+                    "label": "gene overlap",
+                    "text": "${gene_overlap}",
+                    "type": "text"
+                },
+                {
+                    "label": "type",
+                    "text": "${type}",
+                    "type": "text"
+                },
+                {
+                    "label": "regulated",
+                    "text": "${regulated}",
                     "type": "text"
                 }
             ]
@@ -709,82 +706,58 @@
         },
         {
             "match": [
-                "hypomethylated"
-            ],
-            "selected": true,
-            "color": "#38a8ca",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "hypermethylated"
-            ],
-            "selected": true,
-            "color": "#3ba3ec",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
-                "status"
-            ],
-            "selected": true,
-            "color": "#50b131",
-            "display": [
-                {
-                    "label": "source",
-                    "text": "${source}",
-                    "type": "text"
-                },
-                {
-                    "label": "relation",
-                    "text": "${relation}",
-                    "type": "text"
-                },
-                {
-                    "label": "target",
-                    "text": "${target}",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "match": [
                 "diagnosis"
             ],
             "selected": true,
             "color": "#a4a031",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "subtype"
+            ],
+            "selected": true,
+            "color": "#f87644",
+            "display": [
+                {
+                    "label": "source",
+                    "text": "${source}",
+                    "type": "text"
+                },
+                {
+                    "label": "relation",
+                    "text": "${relation}",
+                    "type": "text"
+                },
+                {
+                    "label": "target",
+                    "text": "${target}",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "match": [
+                "location"
+            ],
+            "selected": true,
+            "color": "#f77189",
             "display": [
                 {
                     "label": "source",
@@ -820,12 +793,20 @@
             "width": 100,
             "height": 60
         },
+        "landing": {
+            "subtitle": "A knowledge graph linking Kids First pediatric tumor patients to their multi-omic alterations, and to the kinases, transcription factors, pathways and drugs connected to them.",
+            "prompt": "Where would you like to start?"
+        },
         "tabs": [
             {
-                "endpoint": "/",
+                "endpoint": "/term_search",
                 "label": "Term & Gene Search",
                 "type": "page",
                 "component": "KnowledgeGraph",
+                "landing": {
+                    "icon": "graph",
+                    "description": "Look up a patient, gene, PTM site, pathway, disease or drug and explore its neighborhood, or find the paths that connect two entities."
+                },
                 "props": {
                     "init_function": "initialize_kg",
                     "initial_query": {
@@ -844,11 +825,16 @@
                 "label": "Patient Multi-omic Signal",
                 "type": "page",
                 "component": "PatientSignal",
+                "landing": {
+                    "icon": "patient",
+                    "description": "For a single patient, find the genes with converging omic alterations (gene and protein expression, PTM sites, mutation, methylation) and the enriched kinases, transcription factors or pathways linked to them."
+                },
                 "props": {
                     "title": "Patient Multi-omic Signal",
-                    "description": "Genes and proteins with three or more omic alterations (PTM, expression, mutation, methylation) in a patient, and the enriched kinases, transcription factors or pathways linked to them.",
+                    "description": "Genes altered in at least the chosen number of omic layers (default three) in a patient (gene or protein expression, PTM sites, mutation, methylation), and the enriched kinases, transcription factors or pathways linked to them.",
                     "default_patient_id": "7316-9249",
                     "default_enrichment_node_type": "Kinase",
+                    "default_omic_signal_threshold": 3,
                     "examples": [
                         "7316-4515",
                         "7316-5495",
@@ -860,7 +846,7 @@
     },
     "footer": {
         "style": {
-            "background": "#000",
+            "background": "#0F172A",
             "color": "#FFF"
         },
         "layout": [
@@ -907,5 +893,5 @@
         ],
         "footer_text": "<span style='color:white; font-size:20px; font-weight:bold'>IN DEVELOPMENT...</a></span>"
     },
-    "ui_theme": "enrichr_kg_theme"
+    "ui_theme": "kf_modern_theme"
 }

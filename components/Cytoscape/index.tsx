@@ -204,7 +204,7 @@ export default function Cytoscape ({
 				// </Backdrop> 
 				null
 			) : elements.nodes.length === 0 ? (
-				<div>No results</div>
+				<div style={{display: "flex", alignItems: "center", justifyContent: "center", minHeight: 500, color: "#64748B", fontSize: 14}}>No results</div>
 			) : 
 				<CytoscapeComponent
 					key={id}

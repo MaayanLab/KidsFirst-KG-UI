@@ -51,11 +51,22 @@ export interface UISchema {
             height: number,
             avatar?: boolean
         },
+        // when set and no tab owns "/", the root page is a landing hero that links to each tab
+        landing?: {
+            title?: string,
+            subtitle?: string,
+            prompt?: string,
+        },
         tabs: Array<{
             endpoint: string,
             label: string,
             component: string,
             position?: string,
+            landing?: {
+                description?: string,
+                icon?: string,
+                hidden?: boolean,
+            },
             props?: {
                 subheader?: {
                     url_field: string,

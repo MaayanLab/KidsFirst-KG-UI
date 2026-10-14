@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 import ThemeRegistry from './ThemeRegistry'
 import './global.css'
 import { fetch_kg_schema } from '@/utils/initialize'
+import { Suspense } from 'react'
+import Header from '@/components/Header'
 
  
 export async function generateMetadata(): Promise<Metadata> {
@@ -29,7 +31,12 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <ThemeRegistry options={{ key: 'mui' }} theme={schema.ui_theme || "cfde_theme"}>
-          {children}
+          <div style={{minHeight: "100vh", display: "flex", flexDirection: "column"}}>
+            <Suspense>
+              <Header schema={schema}/>
+            </Suspense>
+            {children}
+          </div>
         </ThemeRegistry>
       </body>
     </html>

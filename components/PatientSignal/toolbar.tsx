@@ -2,7 +2,7 @@
 import React, { useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { useQueryState } from "next-usequerystate"
-import { Tooltip, IconButton, Menu, MenuItem, Stack, Divider, ListItemIcon, ListItemText } from "@mui/material"
+import { Tooltip, IconButton, Menu, MenuItem, Stack, Box, ListItemIcon, ListItemText } from "@mui/material"
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import LabelIcon from '@mui/icons-material/Label'
@@ -18,6 +18,7 @@ import { router_push } from "@/utils/client_side"
 import { process_tables } from "@/utils/helper"
 import { NetworkSchema } from "@/app/api/knowledge_graph/route"
 import { default_layouts as layouts } from "../Cytoscape"
+import { ToolbarGroup, activeSx } from "../misc/ui"
 
 // Graph controls; Cytoscape reads edge_labels, legend, layout and download_image from the URL
 const PatientSignalToolbar = ({
@@ -33,7 +34,7 @@ const PatientSignalToolbar = ({
 	const [edge_labels, setEdgeLabels] = useQueryState('edge_labels')
 	const [legend, setLegend] = useQueryState('legend')
 	const [, setLegendSize] = useQueryState('legend_size')
-	const [, setLayout] = useQueryState('layout')
+	const [layout, setLayout] = useQueryState('layout')
 	const [, setDownloadImage] = useQueryState('download_image')
 	const [anchorImage, setAnchorImage] = useState<HTMLElement>(null)
 	const [anchorLayout, setAnchorLayout] = useState<HTMLElement>(null)
@@ -44,68 +45,38 @@ const PatientSignalToolbar = ({
 	}
 
 	return (
-		<Stack direction="row" alignItems="center" spacing={1} flexWrap="wrap">
-			<Tooltip title={fullscreen ? "Exit full screen": "Full screen"}>
-				<IconButton color="secondary" onClick={()=>{
-					const {fullscreen, ...query} = searchParams
-					if (!fullscreen) query['fullscreen'] = 'true'
-					push(query)
-				}}>
-					{fullscreen ? <FullscreenExitIcon/>: <FullscreenIcon/>}
-				</IconButton>
-			</Tooltip>
-			<Tooltip title="Network view">
-				<IconButton color="secondary"
-					onClick={()=>{
-						const {view, ...query} = searchParams
-						push(query)
-					}}
-					sx={{borderRadius: 5, background: !view ? "#e0e0e0": "none"}}
-				>
-					<Icon path={mdiGraph} size={0.8}/>
-				</IconButton>
-			</Tooltip>
-			<Tooltip title="Table view">
-				<IconButton color="secondary"
-					onClick={()=>push({...searchParams, view: 'table'})}
-					sx={{borderRadius: 5, background: view === "table" ? "#e0e0e0": "none"}}
-				>
-					<Icon path={mdiTable} size={0.8}/>
-				</IconButton>
-			</Tooltip>
-			<Divider sx={{backgroundColor: "secondary.main", height: 20, borderRightWidth: 1}} orientation="vertical"/>
-			<Tooltip title="Save subnetwork">
-				<span>
-					<IconButton color="secondary" disabled={!elements || elements.nodes.length === 0}
-						onClick={()=>process_tables(elements)}
+		<Stack direction="row" alignItems="center" spacing={1} useFlexGap flexWrap="wrap">
+			<ToolbarGroup>
+				<Tooltip title="Network view">
+					<IconButton color="secondary"
+						onClick={()=>{
+							const {view, ...query} = searchParams
+							push(query)
+						}}
+						sx={activeSx(!view)}
 					>
-						<SaveIcon/>
+						<Icon path={mdiGraph} size={0.8}/>
 					</IconButton>
-				</span>
-			</Tooltip>
+				</Tooltip>
+				<Tooltip title="Table view">
+					<IconButton color="secondary"
+						onClick={()=>push({...searchParams, view: 'table'})}
+						sx={activeSx(view === "table")}
+					>
+						<Icon path={mdiTable} size={0.8}/>
+					</IconButton>
+				</Tooltip>
+			</ToolbarGroup>
 			{!view &&
-				<React.Fragment>
-					<Tooltip title="Download graph as an image file">
-						<IconButton color="secondary" onClick={(e)=>setAnchorImage(e.currentTarget)}>
-							<CameraAltOutlinedIcon/>
-						</IconButton>
-					</Tooltip>
-					<Menu anchorEl={anchorImage} open={anchorImage!==null} onClose={()=>setAnchorImage(null)}>
-						{['png', 'jpg', 'svg'].map(fmt=>(
-							<MenuItem key={fmt} onClick={()=>{
-								setAnchorImage(null)
-								setDownloadImage(fmt)
-							}}>{fmt.toUpperCase()}</MenuItem>
-						))}
-					</Menu>
+				<ToolbarGroup>
 					<Tooltip title="Switch graph layout">
 						<IconButton color="secondary" onClick={(e)=>setAnchorLayout(e.currentTarget)}>
-							<FlipCameraAndroidIcon/>
+							<FlipCameraAndroidIcon fontSize="small"/>
 						</IconButton>
 					</Tooltip>
 					<Menu anchorEl={anchorLayout} open={anchorLayout!==null} onClose={()=>setAnchorLayout(null)}>
 						{Object.entries(layouts).map(([label, {icon}])=>(
-							<MenuItem key={label} onClick={()=>{
+							<MenuItem key={label} selected={(layout || "Force-directed") === label} onClick={()=>{
 								setAnchorLayout(null)
 								setLayout(label)
 							}}>
@@ -115,8 +86,8 @@ const PatientSignalToolbar = ({
 						))}
 					</Menu>
 					<Tooltip title={edge_labels ? "Hide edge labels": "Show edge labels"}>
-						<IconButton color="secondary" onClick={()=>setEdgeLabels(edge_labels ? null: 'true')}>
-							{edge_labels ? <VisibilityOffIcon/>: <VisibilityIcon/>}
+						<IconButton color="secondary" onClick={()=>setEdgeLabels(edge_labels ? null: 'true')} sx={activeSx(!!edge_labels)}>
+							{edge_labels ? <VisibilityOffIcon fontSize="small"/>: <VisibilityIcon fontSize="small"/>}
 						</IconButton>
 					</Tooltip>
 					<Tooltip title={legend ? "Hide legend": "Show legend"}>
@@ -128,12 +99,50 @@ const PatientSignalToolbar = ({
 								setLegend('true')
 								setLegendSize('0')
 							}
-						}}>
-							{legend ? <LabelOffIcon/>: <LabelIcon/>}
+						}} sx={activeSx(!!legend)}>
+							{legend ? <LabelOffIcon fontSize="small"/>: <LabelIcon fontSize="small"/>}
 						</IconButton>
 					</Tooltip>
-				</React.Fragment>
+				</ToolbarGroup>
 			}
+			<Box sx={{flexGrow: 1}}/>
+			<ToolbarGroup>
+				<Tooltip title="Save subnetwork">
+					<span>
+						<IconButton color="secondary" disabled={!elements || elements.nodes.length === 0}
+							onClick={()=>process_tables(elements)}
+						>
+							<SaveIcon fontSize="small"/>
+						</IconButton>
+					</span>
+				</Tooltip>
+				{!view &&
+					<React.Fragment>
+						<Tooltip title="Download graph as an image file">
+							<IconButton color="secondary" onClick={(e)=>setAnchorImage(e.currentTarget)}>
+								<CameraAltOutlinedIcon fontSize="small"/>
+							</IconButton>
+						</Tooltip>
+						<Menu anchorEl={anchorImage} open={anchorImage!==null} onClose={()=>setAnchorImage(null)}>
+							{['png', 'jpg', 'svg'].map(fmt=>(
+								<MenuItem key={fmt} onClick={()=>{
+									setAnchorImage(null)
+									setDownloadImage(fmt)
+								}}>{fmt.toUpperCase()}</MenuItem>
+							))}
+						</Menu>
+					</React.Fragment>
+				}
+				<Tooltip title={fullscreen ? "Exit full screen": "Full screen"}>
+					<IconButton color="secondary" onClick={()=>{
+						const {fullscreen, ...query} = searchParams
+						if (!fullscreen) query['fullscreen'] = 'true'
+						push(query)
+					}}>
+						{fullscreen ? <FullscreenExitIcon fontSize="small"/>: <FullscreenIcon fontSize="small"/>}
+					</IconButton>
+				</Tooltip>
+			</ToolbarGroup>
 		</Stack>
 	)
 }

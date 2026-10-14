@@ -135,14 +135,22 @@ export const Legend = ({
       <Box sx={{
         zIndex: 1,
         position: 'absolute',
-        top: 25,
-        left: 25,
-        pointerEvents: "none"
+        top: 16,
+        left: 16,
+        pointerEvents: "none",
+        padding: 1.5,
+        paddingRight: 2,
+        borderRadius: "12px",
+        border: 1,
+        borderColor: "divider",
+        backgroundColor: "rgba(255, 255, 255, 0.88)",
+        backdropFilter: "blur(6px)",
+        boxShadow: "0 4px 16px -8px rgba(15, 23, 42, 0.2)",
       }}>
-          <Grid container alignItems={"center"} spacing={legendSize > 1 ? 1: 0} sx={{maxHeight: 700, overflow: "hidden"}}>
+          <Grid container alignItems={"center"} spacing={legendSize > 1 ? 1: 0} sx={{maxHeight: 700, overflow: "hidden", display: "grid", gridTemplateColumns: "auto"}}>
             <Grid item xs={12}>
-              <Typography variant="h6">
-                <b>Legend</b>
+              <Typography variant="overline" component="div" sx={{color: "text.secondary", lineHeight: 1.6}}>
+                Legend
               </Typography>
             </Grid>
             {Object.values(colors)}

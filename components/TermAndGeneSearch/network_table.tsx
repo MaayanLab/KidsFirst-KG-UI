@@ -149,9 +149,9 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 		const {data={}, header=[], columnVisibilityModel} = processedData[tab] || {}
 		const columns: GridColDef[] = header.filter(i=>i.count === undefined || i.count > 0)
 		return (
-			<Card sx={{marginBottom: 10}} ref={tableRef}>
-				<CardContent>
-					<Grid container justifyContent={"center"} sx={{paddingBottom: 10}}>
+			<Card sx={{border: "none", boxShadow: "none", borderRadius: 0}} ref={tableRef}>
+				<CardContent sx={{padding: 0}}>
+					<Grid container justifyContent={"center"} rowSpacing={2}>
 						<Grid item xs={12}>
 							<Tabs
 								value={tab}
@@ -159,6 +159,7 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 								scrollButtons="auto"
 								onChange={(e, val)=>setTab(val)}
 								aria-label="tab"
+								sx={{borderBottom: 1, borderColor: 'divider'}}
 							>
 							{tabs.map(k=>(
 								<Tab value={k} aria-label="left aligned" key={`tab-${k}`} label={k}/>
@@ -186,9 +187,15 @@ const NetworkTable = ({data, schema}: {data: NetworkSchema, schema: UISchema}) =
 									'.MuiDataGrid-columnHeaders': {
 										color: 'dataGrid.contrastText',
 										backgroundColor: 'dataGrid.main',
-										borderRadius: "1rem 1rem 0 0",
+										borderRadius: 0,
+										fontWeight: 600,
 									},
-									borderRadius: "0 0 4px 4px",
+									borderColor: 'divider',
+									borderRadius: "12px",
+									overflow: 'hidden',
+									'.MuiDataGrid-row:hover': {
+										backgroundColor: 'action.hover',
+									},
 									'.MuiDataGrid-columnSeparator': {
 										display: 'none',
 									},

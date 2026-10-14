@@ -4,19 +4,29 @@ import { Typography, Box } from "@mui/material"
 import { ElevatedIconButton } from "../Header/buttons"
 import { sanitize } from "../SanitizedHTML"
 export const Logo = ({src, alt, title, color="secondary", size, avatar}: {src: string, alt: string, title: string, color: "primary"| "secondary" | "inherit", size?: "small" | "large", avatar?: boolean}) => {
+    const dim = size === 'large' ? 40: 32
     return (
         <Link href={process.env.NEXT_PUBLIC_HOMEPAGE || "/"} className='flex items-center space-x-3'>
             {avatar ?
             <div>
                 <ElevatedIconButton
                     aria-label="menu"
-                    sx={{width: size === 'large' ? 56: 35, height: size === 'large' ? 56: 35, backgroundColor: "inherit"}}
+                    sx={{width: dim, height: dim, backgroundColor: "inherit"}}
                 >
-                    <Image style={{marginLeft: -2, padding: 2,  objectFit: "contain"}} fill={true} alt={alt} src={src} />
+                    <Image style={{padding: 3, objectFit: "contain"}} fill={true} alt={alt} src={src} />
                 </ElevatedIconButton>
             </div>:
-                <Box sx={{width: size === 'large' ? 56: 35, height: size === 'large' ? 56: 35, backgroundColor: "inherit", position: "relative"}}>
-                    <Image style={{marginLeft: -2, padding: 2,  objectFit: "contain"}} fill={true} alt={alt} src={src} />
+                <Box sx={{
+                    width: dim,
+                    height: dim,
+                    flexShrink: 0,
+                    position: "relative",
+                    borderRadius: "10px",
+                    overflow: "hidden",
+                    backgroundColor: "#FFF",
+                    boxShadow: "0 0 0 1px rgba(15, 23, 42, 0.08)",
+                }}>
+                    <Image style={{padding: 3, objectFit: "contain"}} fill={true} alt={alt} src={src} />
                 </Box>
             }
             <div>

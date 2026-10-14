@@ -9,6 +9,7 @@ import { cfde_theme } from '@/themes/cfde';
 import { enrichr_kg_theme } from '@/themes/enrichr-kg';
 import { lncRNAlyzr } from '@/themes/lncRNAlyzr';
 import { harmonizome_kg_theme } from '@/themes/harmonizome-kg';
+import { kf_modern_theme } from '@/themes/modern';
 import { withCookie } from '@/components/ConsentCookie';
 import dynamic from 'next/dynamic';
 
@@ -26,7 +27,8 @@ const themes = {
     cfde_theme: cfde_theme,
     enrichr_kg_theme: enrichr_kg_theme,
     lncRNAlyzr: lncRNAlyzr,
-    harmonizome_kg_theme: harmonizome_kg_theme
+    harmonizome_kg_theme: harmonizome_kg_theme,
+    kf_modern_theme: kf_modern_theme
 }
 
 // This implementation is from emotion-js

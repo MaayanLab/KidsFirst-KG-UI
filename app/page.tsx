@@ -1,12 +1,9 @@
-import Link from "next/link"
-import { Grid, Container } from '@mui/material'
+import { redirect } from "next/navigation"
 import { Component } from "./component_selector"
 import { fetch_kg_schema } from "@/utils/initialize"
-import { Suspense } from "react"
-import Header from '@/components/Header'
-import Subheader from '@/components/Subheader'
-import Footer from '@/components/Footer'
 import QueryTranslator from '@/components/QueryTranslator'
+import PageShell from '@/components/Layout/PageShell'
+import { has_landing } from '@/components/Header/landing'
 
 export default async function Home({searchParams}: {
     searchParams: {
@@ -22,6 +19,15 @@ export default async function Home({searchParams}: {
   }
 }) {
   const schema = await fetch_kg_schema()
+  if (has_landing(schema)) {
+    // links shared before the landing page existed pointed the knowledge graph at "/"
+    const kg_tab = schema.header.tabs.find(tab => tab.component === "KnowledgeGraph")
+    if (kg_tab && Object.keys(searchParams).length > 0) {
+      redirect(`${kg_tab.endpoint}?${new URLSearchParams(searchParams as {[key: string]: string}).toString()}`)
+    }
+    // the header renders the landing hero for "/"
+    return <PageShell schema={schema}/>
+  }
   const root_tab = {component: '', props: {}, endpoint: ""}
   for (const tab of schema.header.tabs) {
     if (tab.endpoint === "/") {
@@ -30,26 +36,10 @@ export default async function Home({searchParams}: {
     }
   }
   return (
-    <Grid container direction={"column"} justifyContent="space-between" sx={{minHeight: "100vh", backgroundColor: (!schema.ui_theme || schema.ui_theme === 'cfde_theme') ? '#FFF': 'tertiary.main'}}>
-      <Grid item>
-        {(!searchParams.fullscreen && schema.header.fullWidth) && <Header schema={schema}/>}
-        <Container maxWidth={searchParams.fullscreen ?"xl": "lg"} sx={{backgroundColor: "#FFF"}} style={{paddingLeft: 0, paddingRight: 0}}>
-          {(!searchParams.fullscreen && !schema.header.fullWidth) && <Header schema={schema}/>}
-          {!searchParams.fullscreen &&<Suspense><Subheader schema={schema}/></Suspense>}
-          <main className="mt-8 pb-8 pl-10 pr-10">
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <QueryTranslator>
-                  <Component searchParams={searchParams} {...root_tab}/>
-                </QueryTranslator>
-              </Grid>
-            </Grid>
-          </main>
-        </Container>
-      </Grid>
-      {!searchParams.fullscreen && <Grid item>
-        <Footer {...schema.footer}/>
-      </Grid>}
-    </Grid>
+    <PageShell schema={schema} fullscreen={searchParams.fullscreen}>
+      <QueryTranslator>
+        <Component searchParams={searchParams} {...root_tab}/>
+      </QueryTranslator>
+    </PageShell>
   )
 }

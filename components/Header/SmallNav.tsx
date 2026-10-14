@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import {
 	Grid, 
-	Button, 
+	IconButton, 
 	Menu,
 	MenuItem,
 } from "@mui/material";
@@ -28,7 +28,7 @@ export const SmallNav = ({tab_component, ui_theme,  counter}:
 	return (
 		<>		
 			{/* {counter && <Counter ui_theme={ui_theme}/>} */}
-			<Button color="tertiary" onClick={handleClick}><MenuIcon/></Button>
+			<IconButton aria-label="Open navigation" onClick={handleClick} sx={{border: 1, borderColor: "divider"}}><MenuIcon/></IconButton>
 			<Menu
 				id="basic-menu"
 				anchorEl={anchorEl}
@@ -39,8 +39,8 @@ export const SmallNav = ({tab_component, ui_theme,  counter}:
 				}}
 				sx={{
 					"& .MuiMenu-paper": {
-						// backgroundColor: "primary.main",
-						padding: '15px'
+						padding: 1,
+						minWidth: 220,
 					},
 					width: '100%',
 				}}

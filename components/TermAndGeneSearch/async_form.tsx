@@ -2,6 +2,7 @@
 import React, { ReactNode, useEffect, useState } from "react"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { Selector } from "../misc"
+import { SectionLabel } from "../misc/ui"
 import { Typography, TextField, Button, Autocomplete, Grid, Stack, Switch, Link } from "@mui/material";
 import { router_push } from "@/utils/client_side"
 import { process_filter } from "@/utils/helper"
@@ -113,7 +114,7 @@ const AsyncFormComponent = ({ direction,
     return (
         <Grid container spacing={1} justifyContent="flex-start" alignItems="center">
             <Grid item xs={12}>
-                <Typography variant="body1" color="secondary"><b>{direction} with</b></Typography>
+                <SectionLabel>{direction} with</SectionLabel>
             </Grid>
             <Grid item xs={4} md={12}>
                 <Selector
@@ -225,8 +226,6 @@ const AsyncFormComponent = ({ direction,
                             value={inputTerm}
                             sx={{
                                 width: '100%',
-                                height: 50,
-                                borderRadius: 5,
                                 padding: 0
                             }}
                             onChange={(e) => setInputTerm(e.target.value)}
@@ -242,7 +241,6 @@ const AsyncFormComponent = ({ direction,
                                     flexDirection: "column",
                                     justifyContent: "center",
                                     alignContent: "flex-start",
-                                    backgroundColor: "#FFF"
                                 }
                             }}
                             inputProps={{
@@ -254,8 +252,8 @@ const AsyncFormComponent = ({ direction,
                 />
             </Grid>
             <Grid item xs={12}>
-                <Stack sx={{ flexDirection: { xs: 'row', md: 'column', alignContent: "center" } }}>
-                    <Typography variant="caption">Example:</Typography>
+                <Stack direction="row" flexWrap="wrap" useFlexGap spacing={0.75} alignItems="center">
+                    <Typography variant="caption" sx={{ color: "text.secondary" }}>Examples:</Typography>
                     {((nodes[type] || {}).example || []).map((e, i) => {
                         let query = {}
                         if (direction === 'Start') {
@@ -281,11 +279,20 @@ const AsyncFormComponent = ({ direction,
                         return (
                             <Link
                                 key={e}
-                                sx={{ textDecoration: "none" }}
+                                underline="none"
                                 color="secondary"
                                 href={pathname + `?filter=${JSON.stringify(query)}`}
+                                sx={{
+                                    paddingX: 1,
+                                    paddingY: 0.25,
+                                    borderRadius: 999,
+                                    border: 1,
+                                    borderColor: "divider",
+                                    backgroundColor: "background.paper",
+                                    "&:hover": { backgroundColor: "action.hover", borderColor: "secondary.light" },
+                                }}
                             >
-                                <Typography sx={{ marginLeft: { xs: 2, md: 'auto' } }} variant="caption" color="secondary">{e}</Typography>
+                                <Typography variant="caption" color="secondary">{e}</Typography>
                             </Link>
                         )
                     })}
@@ -294,8 +301,9 @@ const AsyncFormComponent = ({ direction,
 
             {direction === "Start" &&
                 <Grid item xs={12}>
-                    <Stack direction={'row'} alignItems={"center"} justifyContent={'space-between'}>
-                        <Typography variant="caption">End Node</Typography>
+                    <Stack direction={'row'} alignItems={"center"} justifyContent={'space-between'}
+                        sx={{ paddingLeft: 1.5, paddingY: 0.25, borderRadius: "10px", backgroundColor: "paperGray.main", border: 1, borderColor: "divider" }}>
+                        <Typography variant="body2" sx={{ fontWeight: 500 }}>End node</Typography>
                         <Switch
                             color="secondary"
                             checked={filter.end !== undefined}
