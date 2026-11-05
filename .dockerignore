@@ -3,3 +3,8 @@ data
 dumps
 venv
 .env*
+node_modules
+.next
+.git
+*.tsbuildinfo
+scripts/ingestion/venv

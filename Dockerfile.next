@@ -22,10 +22,33 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
+# NEXT_PUBLIC_* values (and basePath via NEXT_PUBLIC_PREFIX) are inlined by
+# `next build`, so they must be provided at build time (see docker-compose build.args).
+# Never pass secrets here -- they would be baked into the image.
+ARG NEXT_PUBLIC_HOST
+ARG NEXT_PUBLIC_PREFIX
+ARG NEXT_PUBLIC_ENRICHR_URL
+ARG NEXT_PUBLIC_GENESHOT_URL
+ARG NEXT_PUBLIC_COOKIE_NAME
+ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
+ARG NEXT_PUBLIC_HOMEPAGE
+ARG NEXT_PUBLIC_SCHEMA
+ENV NEXT_PUBLIC_HOST=$NEXT_PUBLIC_HOST \
+    NEXT_PUBLIC_PREFIX=$NEXT_PUBLIC_PREFIX \
+    NEXT_PUBLIC_ENRICHR_URL=$NEXT_PUBLIC_ENRICHR_URL \
+    NEXT_PUBLIC_GENESHOT_URL=$NEXT_PUBLIC_GENESHOT_URL \
+    NEXT_PUBLIC_COOKIE_NAME=$NEXT_PUBLIC_COOKIE_NAME \
+    NEXT_PUBLIC_GA_MEASUREMENT_ID=$NEXT_PUBLIC_GA_MEASUREMENT_ID \
+    NEXT_PUBLIC_HOMEPAGE=$NEXT_PUBLIC_HOMEPAGE \
+    NEXT_PUBLIC_SCHEMA=$NEXT_PUBLIC_SCHEMA
+
+ENV NEXT_TELEMETRY_DISABLED 1
+
+# utils/neo4j.ts constructs the driver at import time, which throws during
+# `next build` page-data collection if no URL is set. Constructing a driver does
+# not connect, so a placeholder suffices; this stage's ENV does not reach the
+# runner image, where the real NEO4J_URL is supplied at runtime.
+ENV NEO4J_URL=bolt://build-placeholder:7687
 
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
