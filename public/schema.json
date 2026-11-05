@@ -822,7 +822,7 @@
             },
             {
                 "endpoint": "/patient_signal",
-                "label": "Patient Multi-omic Signal",
+                "label": "Patient Multiomics Signal",
                 "type": "page",
                 "component": "PatientSignal",
                 "landing": {
@@ -830,7 +830,7 @@
                     "description": "For a single patient, find the genes with converging omic alterations (gene and protein expression, PTM sites, mutation, methylation) and the enriched kinases, transcription factors or pathways linked to them."
                 },
                 "props": {
-                    "title": "Patient Multi-omic Signal",
+                    "title": "Patient Multiomics Signal",
                     "description": "Genes altered in at least the chosen number of omic layers (default three) in a patient (gene or protein expression, PTM sites, mutation, methylation), and the enriched kinases, transcription factors or pathways linked to them.",
                     "default_patient_id": "7316-9249",
                     "default_enrichment_node_type": "Kinase",

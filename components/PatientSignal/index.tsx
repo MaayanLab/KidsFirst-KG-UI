@@ -142,7 +142,7 @@ const PatientSignal = async ({ searchParams, props }: {
 							{(searchParams.view === "table") ?
 								<div style={{ minHeight: 700 }}><NetworkTable data={elements} schema={schema} /></div> :
 								<div style={{ minHeight: 700, position: "relative" }}>
-									{patient_id && <Typography variant="h5" sx={{ textAlign: "center" }}>Multi-omic Signal for Patient {patient_id}</Typography>}
+									{patient_id && <Typography variant="h5" sx={{ textAlign: "center" }}>Multiomics Signal for Patient {patient_id}</Typography>}
 									<Cytoscape
 										elements={elements}
 										wide={true}
