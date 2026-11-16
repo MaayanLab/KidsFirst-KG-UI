@@ -42,8 +42,8 @@ services:
           memory: 1G
 
   ${APP_NAME}-neo4j:
-    # pinned to match the local DB so neo4j-admin dump/load is compatible
-    image: neo4j:5.19-community
+    # 5.26 LTS (floating patch tag); keep local (docker-compose-local.yml) on the same version for dump/load compatibility
+    image: neo4j:5.26-community
     x-kubernetes:
       strategy:
         type: Recreate
